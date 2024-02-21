@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add User - JPG Fortress</title>
+    <style>
+        /* Basic styling for buttons */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            border: 2px solid #333;
+            border-radius: 5px;
+            background-color: #f0f0f0;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Hover effect for buttons */
+        .btn:hover {
+            background-color: #333;
+            color: #f0f0f0;
+        }
+
+        /* Additional styling for add user page */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #494646;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #fff;
+        }
+
+        #container {
+            text-align: center;
+        }
+
+        #header img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+
+        .form-container {
+            background-color: #868585;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h1 {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+        }
+
+        .form-group button {
+            width: 100%;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #24335e;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="header">
+            <img src="img/logo.jpg" alt="logo">
+            <h1>JPG Fortress</h1>
+        </div>
+
+        <div class="form-container">
+            <h1>Add User</h1>
+            <form id="add-user-form" action="/adduser" method="POST" class="form-group">
+                <label for="name">Name:</label><br>
+                <input type="text" id="name" name="name"><br>
+                <label for="phone">Phone:</label><br>
+                <input type="text" id="phone" name="phone"><br><br>
+                <button type="submit" class="btn">Add User</button>
+            </form>
+            <p>WAIT, Before hitting add user, please stand straight infront of the camera and then press the start training button! Wait about 7 seconds before moving</p>
+            <button id="start-training-btn" class="btn">Start Training</button>
+        </div>
+    </div>
+
+    <script>
+        // Event listener for the "Start Training" button
+        document.getElementById('start-training-btn').addEventListener('click', async () => {
+            try {
+                const response = await fetch('/starttraining', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ flag: true }) // Sending flag value as true
+                });
+                if (response.ok) {
+                    alert('Training started successfully!');
+                } else {
+                    console.error('Failed to start training');
+                }
+            } catch (error) {
+                console.error('Error starting training:', error);
+            }
+        });
+    </script>
+</body>
+</html>

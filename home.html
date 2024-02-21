@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JPG Fortress</title>
+    <style>
+        /* Basic styling for buttons */
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 20px 40px;
+            margin: 50px;
+            font-size: 22px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            border-radius: 20px;
+            border: none;
+            background-color: #24335e;
+            color: #fff;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Hover effect for buttons */
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Additional styling for dashboard page */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #494646;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        #header {
+            margin-top: 20px;
+        }
+
+        #header img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        .rectangle {
+            width: 80%;
+            margin: 50px auto;
+            background-color: #868585;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .sign-out-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            background-color: #d9534f;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .sign-out-btn:hover {
+            background-color: #c9302c;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <img src="img/logo.jpg" alt="logo">
+        <h1 style="color: white;">JPG Fortress </h1>
+    </div>
+
+    <div class="rectangle">
+        <div class="btn-container">
+            <a onclick="location.href='/manageuser'" class="btn">Manage Users</a>
+            <a onclick="location.href='/history'"  class="btn">History</a>
+            <a href="#" class="btn">Live Feed</a>
+        </div>
+        <button class="sign-out-btn" onclick="location.href='/index'">Sign Out</button>
+    </div>
+</body>
+</html>

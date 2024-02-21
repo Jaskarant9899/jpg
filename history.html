@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View History - JPG Fortress</title>
+    <style>
+        /* Basic styling for buttons */
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 20px 40px;
+            margin: 10px;
+            font-size: 22px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            border-radius: 20px;
+            border: none;
+            background-color: #24335e;
+            color: #fff;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Hover effect for buttons */
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Additional styling for dashboard page */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #494646;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        #header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding: 0 20px;
+            color: #fff;
+        }
+
+        #header img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .rectangle {
+            width: 80%;
+            margin: 50px auto;
+            background-color: #868585;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .activity-list {
+            text-align: left;
+            margin-top: 20px;
+            color: white;
+        }
+
+        .activity-card {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .activity-card h3 {
+            margin-top: 0;
+            font-size: 18px;
+        }
+
+        .view-image-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #24335e;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .view-image-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <img src="img/logo.jpg" alt="logo">
+        <h1>JPG Fortress</h1>
+        <a  onclick="location.href='/home'" class="btn" style="align-self: flex-end;">Home</a>
+    </div>
+
+    <div class="rectangle">
+        <h2 style="color: white;">History</h2>
+        <div class="activity-list">
+            <div class="activity-card">
+                <h3>Activity Detected: January 15, 2024 - 10:30 AM</h3>
+                <button class="view-image-btn">View Image</button>
+            </div>
+            <div class="activity-card">
+                <h3>Activity Detected: January 16, 2024 - 11:45 AM</h3>
+                <button class="view-image-btn">View Image</button>
+            </div>
+            <!-- Add more activity cards as needed -->
+        </div>
+    </div>
+</body>
+</html>

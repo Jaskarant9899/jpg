@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        /* Basic styling for login form */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #494646;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #f0f0f0;
+        }
+
+        #header {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #header img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+
+        .login-container {
+            background-color: #868585;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-container h2 {
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: center;
+
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+        }
+
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+            background-color: #24335e;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .form-group button:hover {
+            background-color: #24335e;
+            color: #fff;    
+        }   
+
+    </style>
+</head>
+<body>
+    <div id="header">
+        <img src="img/logo.jpg" alt="logo">
+        <h1>JPG Fortress</h1>
+    </div>
+
+    <div class="login-container">
+        <h2>Login</h2>
+        <form action="#" method="POST">
+            <div class="form-group">
+                <label for="username">Email:</label>
+                <input type="text" id="Email" name="Email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" onclick="location.href='/home'">Login</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
