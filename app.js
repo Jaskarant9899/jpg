@@ -71,11 +71,11 @@ app.get('/adduser', (req, res) => {
 });
 
 app.post('/adduser', async (req, res) => {
-    const { name, phone } = req.body;
+    const { Fname, Number } = req.body;
 
-    // Check if name and phone are provided
-    if (!name || !phone) {
-        return res.status(400).json({ message: 'Name and phone number are required' });
+    // Check if Fname and Number are provided
+    if (!Fname || !Number) {
+        return res.status(400).json({ message: 'First name and phone number are required' });
     }
 
     const usersCollection = client.db('raspberryPi').collection('Users');
@@ -85,7 +85,7 @@ app.post('/adduser', async (req, res) => {
         const userCount = await usersCollection.countDocuments();
 
         // Insert the new user into the database
-        const result = await usersCollection.insertOne({ name, phone, label: userCount + 1 });
+        const result = await usersCollection.insertOne({ Fname, Number, Label: userCount + 1 });
         console.log('User added:', result.insertedId);
         res.redirect('/home');
     } catch (error) {
@@ -93,6 +93,7 @@ app.post('/adduser', async (req, res) => {
         res.status(500).json({ message: 'Failed to add user' });
     }
 });
+
 
 
 app.post('/starttraining', async (req, res) => {
@@ -138,23 +139,17 @@ app.get('/manageuser', (req, res) => {
 });
 
 
-app.delete('/api/users/:userId', async (req, res) => {
-    const userId = req.params.userId;
+// API endpoint to fetch users
+app.get('/api/users', async (req, res) => {
     try {
-        const usersCollection = client.db('your_database_name').collection('Users');
-        const objectId = new ObjectId(userId);
-        const result = await usersCollection.deleteOne({ _id: objectId });
-        if (result.deletedCount === 1) {
-            res.sendStatus(200);
-        } else {
-            res.status(404).json({ message: 'User not found' });
-        }
+        const usersCollection = client.db('raspberryPi').collection('Users');
+        const users = await usersCollection.find().toArray();
+        res.json(users);
     } catch (error) {
-        console.error('Error deleting user:', error);
-        res.status(500).json({ message: 'Failed to delete user' });
+        console.error('Error fetching users:', error);
+        res.status(500).json({ message: 'Failed to fetch users' });
     }
 });
-
 
 // API endpoint to delete a user
 app.delete('/api/users/:userId', async (req, res) => {
