@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add User - JPG Fortress</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
     <style>
         /* Basic styling for buttons */
         .btn {
@@ -103,39 +105,62 @@
         </div>
 
         <div class="form-container">
-            <h1>Add User</h1>
+            <h1>Add User and Start Training</h1>
             <form id="add-user-form" action="/adduser" method="POST" class="form-group">
-                <label for="name">First Name:</label><br>
+                <label for="Fname">First Name:</label><br>
                 <input type="text" id="Fname" name="Fname"><br>
-                <label for="phone">Number:</label><br>
+                <label for="Number">Phone Number:</label><br>
                 <input type="text" id="Number" name="Number"><br><br>
-                <button type="submit" class="btn">Add User</button>
+                <p>WAIT! Please stand directly infront of the camera and and wait about 10 secons to finish the set up</p>
+                <button type="button" id="add-user-and-train-btn"a onclick="location.href='/home'">Add User and Start Training</button>
             </form>
-            <p>WAIT, Before hitting add user, please stand straight infront of the camera and then press the start training button! Wait about 7 seconds before moving </p>
-            <button id="start-training-btn" class="btn">Start Training</button>
         </div>
     </div>
 
     <script>
-        // Event listener for the "Start Training" button
-        document.getElementById('start-training-btn').addEventListener('click', async () => {
-            try {
-                const response = await fetch('/starttraining', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ flag: true }) // Sending flag value as true
-                });
-                if (response.ok) {
-                    alert('Training started successfully!');
-                } else {
-                    console.error('Failed to start training');
-                }
-            } catch (error) {
-                console.error('Error starting training:', error);
+      $(document).ready(() => {
+    $('#add-user-and-train-btn').on('click', async () => {
+        try {
+            console.log('Button clicked');
+
+            // Send request to add user
+            const addUserResponse = await fetch('/adduser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    Fname: $('#Fname').val(),
+                    Number: $('#Number').val()
+                })
+            });
+            if (!addUserResponse.ok) {
+                throw new Error('Failed to add user');
             }
-        });
+
+            console.log('User added successfully');
+
+            // Send request to start training
+            const startTrainingResponse = await fetch('/starttraining', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ flag: true })
+            });
+          
+
+            console.log('Training started successfully');
+
+            // Both actions completed successfully
+            alert('User added and training started successfully!');
+        } catch (error) {
+            console.error('Error:', error.message);
+            alert('An error occurred. Please try again.');
+        }
+    });
+});
+
     </script>
 </body>
 </html>

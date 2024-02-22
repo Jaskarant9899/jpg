@@ -70,6 +70,29 @@ app.get('/adduser', (req, res) => {
     res.sendFile(path.join(__dirname, 'adduser.html'));
 });
 
+// Modified startTraining function to return a promise
+async function startTraining() {
+    try {
+        const flagValue = true;
+        const appConfigCollection = client.db('raspberryPi').collection('appConfig');
+        const updateResult = await appConfigCollection.updateOne(
+            { id: 'addUser' },
+            { $set: { flag: flagValue } }
+        );
+        console.log('Update result:', updateResult);
+        if (updateResult.modifiedCount === 1) {
+            console.log('Flag updated successfully');
+            return true; // Resolve the promise if flag is updated successfully
+        } else {
+            console.error('Failed to update flag');
+            return false; // Reject the promise if flag update fails
+        }
+    } catch (error) {
+        console.error('Error updating flag:', error);
+        throw error; // Throw error to be caught by the caller
+    }
+}
+
 app.post('/adduser', async (req, res) => {
     const { Fname, Number } = req.body;
 
@@ -87,6 +110,12 @@ app.post('/adduser', async (req, res) => {
         // Insert the new user into the database
         const result = await usersCollection.insertOne({ Fname, Number, Label: userCount + 1 });
         console.log('User added:', result.insertedId);
+
+        // Proceed to start training
+        await startTraining();
+
+        // Redirect to home page after successful addition and training
+        console.log('Redirecting to /home');
         res.redirect('/home');
     } catch (error) {
         console.error('Error adding user:', error);
@@ -95,34 +124,6 @@ app.post('/adduser', async (req, res) => {
 });
 
 
-
-app.post('/starttraining', async (req, res) => {
-    try {
-        const flagValue = req.body.flag;
-        console.log('Flag value received:', flagValue);
-
-        const appConfigCollection = client.db('raspberryPi').collection('appConfig');
-        
-        // Attempt to update the document with the flag
-        const updateResult = await appConfigCollection.updateOne(
-            { id: 'addUser' }, // Filter by the desired ID
-            { $set: { flag: flagValue } } // Set the flag field
-        );
-
-        console.log('Update result:', updateResult);
-
-        if (updateResult.modifiedCount === 1) {
-            console.log('Flag updated successfully');
-            res.sendStatus(200);
-        } else {
-            console.error('Failed to update flag');
-            res.sendStatus(500);
-        }
-    } catch (error) {
-        console.error('Error updating flag:', error);
-        res.sendStatus(500);
-    }
-});
 
 
 // Additional routes...
