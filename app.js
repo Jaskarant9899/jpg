@@ -123,6 +123,32 @@ app.post('/adduser', async (req, res) => {
     }
 });
 
+app.post('/controlsensor', async (req, res) => {
+    try {
+        const flagValue = req.body.flag;
+        console.log('Flag value received for controlling sensor:', flagValue);
+
+        // Update the flag value in the sensorConfig collection
+        const sensorConfigCollection = client.db('raspberryPi').collection('sensorConfig');
+        const updateResult = await sensorConfigCollection.updateOne(
+            { id: 'stopSensor' }, // Filter by the desired ID
+            { $set: { flag: flagValue } } // Set the flag field
+        );
+
+        console.log('Sensor control update result:', updateResult);
+
+        if (updateResult.modifiedCount === 1) {
+            console.log('Sensor control flag updated successfully');
+            res.sendStatus(200);
+        } else {
+            console.error('Failed to update sensor control flag');
+            res.sendStatus(500);
+        }
+    } catch (error) {
+        console.error('Error controlling sensor:', error);
+        res.sendStatus(500);
+    }
+});
 
 
 

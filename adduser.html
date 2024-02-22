@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add User - JPG Fortress</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
+    <title>Add User and Control Sensor - JPG Fortress</title>
     <style>
         /* Basic styling for buttons */
         .btn {
@@ -105,62 +103,78 @@
         </div>
 
         <div class="form-container">
-            <h1>Add User and Start Training</h1>
+            <h1>Add User and Control Sensor</h1>
+            <!-- Button to control sensor -->
+            <p>Hit this button to turn of the sensor during the set up process</p>
+            <button id="control-sensor-btn" class="btn">Control Sensor</button>
+            <br>
             <form id="add-user-form" action="/adduser" method="POST" class="form-group">
                 <label for="Fname">First Name:</label><br>
                 <input type="text" id="Fname" name="Fname"><br>
                 <label for="Number">Phone Number:</label><br>
                 <input type="text" id="Number" name="Number"><br><br>
-                <p>WAIT! Please stand directly infront of the camera and and wait about 10 secons to finish the set up</p>
-                <button type="button" id="add-user-and-train-btn"a onclick="location.href='/home'">Add User and Start Training</button>
+                <p>WAIT! Before hitting start training, please make sure that you are standing directly infront of the camera and make sure to not move for 10 secs</p>
+                <button type="button" id="add-user-and-train-btn" onclick="location.href='/home'"class="btn">Add User and Start Training</button>
             </form>
         </div>
     </div>
 
     <script>
-      $(document).ready(() => {
-    $('#add-user-and-train-btn').on('click', async () => {
-        try {
-            console.log('Button clicked');
-
-            // Send request to add user
-            const addUserResponse = await fetch('/adduser', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    Fname: $('#Fname').val(),
-                    Number: $('#Number').val()
-                })
-            });
-            if (!addUserResponse.ok) {
-                throw new Error('Failed to add user');
+        // Event listener for controlling sensor
+        document.getElementById('control-sensor-btn').addEventListener('click', async () => {
+            try {
+                const response = await fetch('/controlsensor', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ flag: true }) // Sending flag value as true
+                });
+                if (response.ok) {
+                    alert('Sensor control request sent successfully!');
+                } else {
+                    console.error('Failed to control sensor');
+                }
+            } catch (error) {
+                console.error('Error controlling sensor:', error);
             }
+        });
 
-            console.log('User added successfully');
+        // Event listener for adding user and starting training
+        document.getElementById('add-user-and-train-btn').addEventListener('click', async () => {
+            try {
+                // Send request to add user
+                const addUserResponse = await fetch('/adduser', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        Fname: document.getElementById('Fname').value,
+                        Number: document.getElementById('Number').value
+                    })
+                });
+                if (!addUserResponse.ok) {
+                    throw new Error('Failed to add user');
+                }
 
-            // Send request to start training
-            const startTrainingResponse = await fetch('/starttraining', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ flag: true })
-            });
-          
+                // Send request to start training
+                const startTrainingResponse = await fetch('/starttraining', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ flag: true })
+                });
+              
 
-            console.log('Training started successfully');
-
-            // Both actions completed successfully
-            alert('User added and training started successfully!');
-        } catch (error) {
-            console.error('Error:', error.message);
-            alert('An error occurred. Please try again.');
-        }
-    });
-});
-
+                // Both actions completed successfully
+                alert('User added and training started successfully!');
+            } catch (error) {
+                console.error('Error:', error.message);
+                alert('An error occurred. Please try again.');
+            }
+        });
     </script>
 </body>
 </html>
